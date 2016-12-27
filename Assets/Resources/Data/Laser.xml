@@ -1,0 +1,27 @@
+<dataroot>
+<Laser>
+<ID>0</ID>
+<Name>Arrow</Name>
+<Speed>20</Speed>
+</Laser>
+<Laser>
+<ID>1</ID>
+<Name>Filter</Name>
+<Speed>15</Speed>
+</Laser>
+<Laser>
+<ID>2</ID>
+<Name>Destroyer</Name>
+<Speed>15</Speed>
+</Laser>
+<Laser>
+<ID>3</ID>
+<Name>Armor Breaker</Name>
+<Speed>25</Speed>
+</Laser>
+<Laser>
+<ID>4</ID>
+<Name>Drill</Name>
+<Speed>30</Speed>
+</Laser>
+</dataroot>
