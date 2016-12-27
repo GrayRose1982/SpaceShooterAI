@@ -16,7 +16,7 @@ public class ItemDropped : MonoBehaviour
 			return _lwEntity;
 		}
 		set {
-			_lwEntity = value;
+			_lwEntity = new LaserWeaponEntity (value);
 			if (_lwEntity != null)
 			if (_lwEntity.laser != null)
 				SetSprite (_lwEntity.laser.sprite);
@@ -30,7 +30,7 @@ public class ItemDropped : MonoBehaviour
 			return _mwEntity;
 		}
 		set {
-			_mwEntity = value;
+			_mwEntity = new MissileWeaponEntity (value);
 			if (_mwEntity != null)
 			if (_mwEntity.missile != null)
 				SetSprite (_mwEntity.missile.sprite);
@@ -43,7 +43,7 @@ public class ItemDropped : MonoBehaviour
 			return _baseCharacter;
 		}
 		set {
-			_baseCharacter = value;
+			_baseCharacter = new BaseCharacter (value);
 			if (_baseCharacter != null)
 				SetSprite (_baseCharacter.sprite);
 			type = TypeItemDrop.Character;

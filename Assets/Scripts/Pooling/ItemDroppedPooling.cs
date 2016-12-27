@@ -61,22 +61,23 @@ public class ItemDroppedPooling : MonoBehaviour
 			items.RemoveAt (0);
 			itemsOutSide.Add (result);
 
-			TypeItemDrop typeDrop = (TypeItemDrop)Random.Range (0, 3);
+			TypeItemDrop typeDrop = (TypeItemDrop)Random.Range (1, 3);
 			int r = 0;
 			switch (typeDrop) {
 			case TypeItemDrop.Character:
-				r = Random.Range (-1, LoadCharacterXML.data.baseCharacterData.Count);
+				r = Random.Range (0, LoadCharacterXML.data.baseCharacterData.Count);
 				result.baseCharacter = new BaseCharacter (LoadCharacterXML.data.baseCharacterData [r]);
 				break;
 			case TypeItemDrop.LaserWeapon:
-				r = Random.Range (-1, LoadWeaponXml.data.lwData.Count);
+				r = Random.Range (0, LoadWeaponXml.data.lwData.Count);
 				result.lwEntity = new LaserWeaponEntity (LoadWeaponXml.data.lwData [r]);
 				break;
 			case TypeItemDrop.MissileWeapon:
-				r = Random.Range (-1, LoadWeaponXml.data.mwData.Count);
+				r = Random.Range (0, LoadWeaponXml.data.mwData.Count);
 				result.mwEntity = new MissileWeaponEntity (LoadWeaponXml.data.mwData [r]);
 				break;
 			default:
+				Debug.Log (typeDrop + " Bug here");
 				break;
 			}
 

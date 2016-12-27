@@ -76,9 +76,9 @@ public class GenerateForDeathMacth : MonoBehaviour
 		ship.transform.rotation = pos.rotation;
 		ship.gameObject.SetActive (true);
 //		ship.t
-		ship.GetComponentInChildren<AICharacter> ().character = LoadCharacterXML.data.baseCharacterData [id];
-		ship.GetComponentInChildren<AIWeaponController> ().mainWeapon = LoadWeaponXml.data.GetLaserWeapon (id);
-		ship.GetComponentInChildren<AIWeaponController> ().secondWeapon = LoadWeaponXml.data.GetMissileWeapon (id);
+		ship.GetComponentInChildren<AICharacter> ().character = new BaseCharacter (LoadCharacterXML.data.baseCharacterData [id]);
+		ship.GetComponentInChildren<AIWeaponController> ().mainWeapon = new LaserWeaponEntity (LoadWeaponXml.data.GetLaserWeapon (id));
+		ship.GetComponentInChildren<AIWeaponController> ().secondWeapon = new MissileWeaponEntity (LoadWeaponXml.data.GetMissileWeapon (id));
 		numberShip++;
 	}
 

@@ -32,19 +32,19 @@ public class AICharacter : MonoBehaviour
 	public void TakeDamage (int damage, int armorBreak)
 	{
 		Debug.Log ("TakeDamage " + damage + " " + armorBreak);
-		character.armor -= armorBreak;
-		if (character.armor < 0) {
-			character.hp -= damage;
-			character.armor = 0;
+		_character.armor -= armorBreak;
+		if (_character.armor < 0) {
+			_character.hp -= damage;
+			_character.armor = 0;
 		} else {
-			character.armor -= Mathf.RoundToInt (damage / 2);
-			if (character.armor < 0) {
-				character.hp += character.armor * 2;
-				character.armor = 0;
+			_character.armor -= Mathf.RoundToInt (damage / 2);
+			if (_character.armor < 0) {
+				_character.hp += _character.armor * 2;
+				_character.armor = 0;
 			}
 		}
 
-		if (character.hp <= 0)
+		if (_character.hp <= 0)
 			DestroyPlayer ();
 	}
 
