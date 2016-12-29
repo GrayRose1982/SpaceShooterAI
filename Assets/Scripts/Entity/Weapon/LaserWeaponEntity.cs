@@ -12,6 +12,9 @@ public class LaserWeaponEntity : WeaponEntity
 
 	public LaserWeaponEntity (LaserWeaponEntity laserWeapon)
 	{
+		if (laserWeapon == null)
+			return;
+
 		id = laserWeapon.id;
 		damage = laserWeapon.damage;
 		armorBreak = laserWeapon.armorBreak;

@@ -25,6 +25,8 @@ public class AIMoveController : MonoBehaviour
 
 	void Start ()
 	{
+		if (rigid)
+			rigid = GetComponent<Rigidbody2D> ();
 		_trans = transform;
 		SetDirection ();
 	}

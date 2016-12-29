@@ -12,6 +12,9 @@ public class MissileWeaponEntity : WeaponEntity
 
 	public MissileWeaponEntity (MissileWeaponEntity missileWeapon)
 	{
+		if (missileWeapon == null)
+			return;
+
 		id = missileWeapon.id;
 		damage = missileWeapon.damage;
 		armorBreak = missileWeapon.armorBreak;

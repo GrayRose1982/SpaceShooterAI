@@ -60,10 +60,7 @@ public class Character : MonoBehaviour
 		GetComponentInParent<MoveController> ().enabled = false;
 		Time.timeScale = 0f;
 
-//		if (UIGameController.gameController)
 		UIGameController.gameController.GameOver ();
-
-		Debug.LogWarning ("Kill " + transform.name + " or" + character.name);
 	}
 
 	void OnTriggerEnter2D (Collider2D hit)
@@ -101,7 +98,7 @@ public class Character : MonoBehaviour
 			break;
 		}
 
-		if (damage > 0 || armorBreak > 0) {
+		if ((damage > 0 || armorBreak > 0) && !isMeteor) {
 			TakeDamage (damage, armorBreak);
 			UpdateUI ();
 		}

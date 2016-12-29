@@ -17,6 +17,9 @@ public class BaseCharacter
 
 	public BaseCharacter (BaseCharacter bc)
 	{
+		if (bc == null)
+			return;
+
 		name = bc.name;
 		id = bc.id;
 		hp = bc.hp;
