@@ -47,7 +47,6 @@ public class Character : MonoBehaviour
 			}
 		}
 
-		Debug.Log (name + " after take damage. HP: " + character.hp + " Armor: " + character.armor);
 		if (character.hp <= 0)
 			DestroyShip ();
 		

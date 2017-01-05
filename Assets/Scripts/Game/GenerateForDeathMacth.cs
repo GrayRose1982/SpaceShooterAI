@@ -26,14 +26,21 @@ public class GenerateForDeathMacth : MonoBehaviour
 
 	void Update ()
 	{
-//		if (Input.GetKey (KeyCode.Space))
-//			KillAllEnemy ();
+		if (Input.GetKey (KeyCode.Space))
+			KillAllEnemy ();
+
+
+		SpawnByTurn ();
+	}
+
+	private void SpawnByTurn ()
+	{
 		switch (state) {
 		case MapState.WaitingToSpawn:
 			StartCoroutine (WaitToSpawn (1f));
 			break;
 		case MapState.StartSpawn:
-			StartCoroutine (SpawnCreep (.5f));
+			StartCoroutine (SpawnCreepByTurn (.5f));
 			break;
 		case MapState.SpawnDone:
 		case MapState.WaitForNextSpawn:
@@ -55,7 +62,7 @@ public class GenerateForDeathMacth : MonoBehaviour
 		state = MapState.WaitingToSpawn;
 	}
 
-	private IEnumerator SpawnCreep (float timePerShip)
+	private IEnumerator SpawnCreepByTurn (float timePerShip)
 	{
 
 		state = MapState.Spawning;
@@ -63,19 +70,18 @@ public class GenerateForDeathMacth : MonoBehaviour
 			for (int j = 0; j < mapEntity [level].enemyNumber [i]; j++) {
 				int rad = Random.Range (0, spawnPositions.Length);
 				AIMoveController ship = CharacterPooling.pool.GetShip ();
-				SetupShip (ship, spawnPositions [rad], mapEntity [level].enemyID [i]);
+				SetupShipByTurn (ship, spawnPositions [rad], mapEntity [level].enemyID [i]);
 				yield return new WaitForSeconds (timePerShip);
 			}
 		}
 		state = MapState.SpawnDone;
 	}
 
-	private void SetupShip (AIMoveController ship, Transform pos, int id)
+	private void SetupShipByTurn (AIMoveController ship, Transform pos, int id)
 	{
 		ship.transform.position = pos.position;
 		ship.transform.rotation = pos.rotation;
 		ship.gameObject.SetActive (true);
-//		ship.t
 		ship.GetComponentInChildren<AICharacter> ().character = new BaseCharacter (LoadCharacterXML.data.baseCharacterData [id]);
 		ship.GetComponentInChildren<AIWeaponController> ().mainWeapon = new LaserWeaponEntity (LoadWeaponXml.data.GetLaserWeapon (id));
 		ship.GetComponentInChildren<AIWeaponController> ().secondWeapon = new MissileWeaponEntity (LoadWeaponXml.data.GetMissileWeapon (id));
@@ -91,6 +97,7 @@ public class GenerateForDeathMacth : MonoBehaviour
 
 	public void KillAllEnemy ()
 	{
-		numberShip = 0;
+//		numberShip = 0;
+		Debug.LogError ("Kill all enemy func dont do any thing");
 	}
 }

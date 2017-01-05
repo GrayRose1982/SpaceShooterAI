@@ -7,6 +7,8 @@ public class AIWeaponController : MonoBehaviour
 	[SerializeField] private LaserWeaponEntity _mainWeapon;
 	[SerializeField] private MissileWeaponEntity _secondWeapon;
 
+	private AIMoveController aimove;
+
 	public Transform[] mainBarrels;
 	public Transform[] secondBarrels;
 
@@ -62,6 +64,12 @@ public class AIWeaponController : MonoBehaviour
 //		_mainWeapon.laser.armorBreak = _mainWeapon.armorBreak;
 //		_secondWeapon.missile.damage = _secondWeapon.damage;
 //		_secondWeapon.missile.armorBreak = _secondWeapon.armorBreak;
+	}
+
+	void Start ()
+	{
+		if (!aimove)
+			aimove = GetComponentInParent<AIMoveController> ();
 	}
 
 	void Update ()
@@ -132,6 +140,8 @@ public class AIWeaponController : MonoBehaviour
 		if (hit.CompareTag ("Player"))
 			targets.Add (hit.transform);
 
+		aimove.GetNewTarget (hit.transform);
+
 		fireMainWeapon = true;
 		fireMissileWeapon = true;
 	}
@@ -140,6 +150,8 @@ public class AIWeaponController : MonoBehaviour
 	{
 		if (hit.CompareTag ("Player"))
 			targets.Remove (hit.transform);
+
+		aimove.TargetOut (hit.transform);
 
 		if (targets.Count == 0) {
 			fireMainWeapon = false;

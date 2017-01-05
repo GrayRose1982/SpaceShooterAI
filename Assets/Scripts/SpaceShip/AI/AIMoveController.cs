@@ -13,6 +13,10 @@ public class AIMoveController : MonoBehaviour
 	public Vector2 direction;
 
 	private Transform _trans;
+	private float sizeDeltaMove = .5f;
+
+	[SerializeField] private TypeAIMove typeMove;
+	[SerializeField] private Vector2 posMoveWhenFree;
 
 	[SerializeField] private Transform target;
 	[SerializeField] private float errorAngle;
@@ -20,30 +24,46 @@ public class AIMoveController : MonoBehaviour
 
 	void OnEnable ()
 	{
-		target = GameObject.FindGameObjectWithTag ("Player").transform;
+//		target = GameObject.FindGameObjectWithTag ("Player").transform;
 	}
 
 	void Start ()
 	{
-		if (rigid)
+		if (!rigid)
 			rigid = GetComponent<Rigidbody2D> ();
+		
+		if (!target)
+			GetNewPosToMove ();
+		
 		_trans = transform;
 		SetDirection ();
 	}
 
 	void Update ()
 	{
-		RotateToTarget ();
-		SetDirection ();
+		switch (typeMove) {
+		case TypeAIMove.Free:
+			RotateToTarget ();
+			break;
+		default:
+			break;
+		}
+
 		MoveToward ();
+
 	}
 
 	private void RotateToTarget ()
 	{
-		if (!target)
-			return;
+		Vector2 dif;
 
-		Vector2 dif = target.position - _trans.position;
+		if (!target) {
+			dif = posMoveWhenFree - (Vector2)_trans.position;
+			if (dif.magnitude <= sizeDeltaMove)
+				GetNewPosToMove ();
+		} else
+			dif = target.position - _trans.position;
+
 		float AngleTo = Mathf.Atan2 (dif.y, dif.x) * Mathf.Rad2Deg;
 		float currentAngle = _trans.rotation.eulerAngles.z + errorAngle;
 		float difAngle = AngleTo - currentAngle;
@@ -61,6 +81,7 @@ public class AIMoveController : MonoBehaviour
 		} else {
 			speedRot = speedRotate * Time.deltaTime * (difAngle > 0 ? -1 : 1);
 		}
+
 		speedRot = Mathf.Abs (speedRot) > Mathf.Abs (difAngle) ? difAngle : speedRot;
 
 		_trans.Rotate (0, 0, speedRot);
@@ -70,7 +91,9 @@ public class AIMoveController : MonoBehaviour
 	{
 		float angle = _trans.rotation.eulerAngles.z - errorAngle;
 		direction = new Vector2 (Mathf.Cos (angle * Mathf.Deg2Rad), Mathf.Sin (angle * Mathf.Deg2Rad));
-		SetParticleDirection (angle - errorAngle);
+
+		if (engineParticle)
+			SetParticleDirection (angle - errorAngle);
 	}
 
 	private void SetParticleDirection (float angle)
@@ -92,6 +115,26 @@ public class AIMoveController : MonoBehaviour
 
 	private void MoveToward ()
 	{
+		SetDirection ();
 		rigid.velocity = direction * speedMove;
+	}
+
+	private void GetNewPosToMove ()
+	{
+		if (!GenerateForFree.generateMap)
+			return;
+
+		posMoveWhenFree = GenerateForFree.generateMap.GetRandomSpace ();
+	}
+
+	public void GetNewTarget (Transform target)
+	{
+		this.target = target;
+	}
+
+	public void TargetOut (Transform target)
+	{
+//		if (this.target == target)
+		target = null;
 	}
 }

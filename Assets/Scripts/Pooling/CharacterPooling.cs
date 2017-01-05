@@ -32,6 +32,14 @@ public class CharacterPooling : MonoBehaviour
 		loadDone = true;
 	}
 
+	//	public IEnumerator SpawnAndGetShip ()
+	//	{
+	//		GameObject go = (GameObject)Instantiate (ship);
+	//		yield return new WaitForSeconds (0.005f);
+	//		AIMoveController s = go.GetComponent<AIMoveController> ();
+	//		yield return s;
+	//	}
+
 	public AIMoveController GetShip ()
 	{
 		AIMoveController result = null;

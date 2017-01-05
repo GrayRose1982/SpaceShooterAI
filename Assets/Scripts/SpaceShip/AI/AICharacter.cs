@@ -15,6 +15,8 @@ public class AICharacter : MonoBehaviour
 		}
 	}
 
+	[SerializeField] private Transform _trans;
+
 	public bool isMeteor;
 	public PolygonCollider2D polygon;
 
@@ -110,5 +112,34 @@ public class AICharacter : MonoBehaviour
 
 		polygon = gameObject.AddComponent <PolygonCollider2D> ();
 		polygon.isTrigger = true;
+	}
+
+	public void RandomForMeteor (float edgeX, float edgeY)
+	{
+		SetRandomRotate ();
+		SetRandomScale (.5f, 3f);
+		SetRandomPos (edgeX, edgeY);
+	}
+
+	private void SetRandomRotate ()
+	{
+		float randomRot = Random.Range (0f, 360f);
+
+		_trans.rotation = Quaternion.Euler (0, 0, randomRot);
+	}
+
+	private void SetRandomScale (float min, float max)
+	{
+		float random = Random.Range (min, max);
+
+		_trans.localScale = new Vector2 (random, random);
+	}
+
+	private void SetRandomPos (float edgeX, float edgeY)
+	{
+		float randomX = Random.Range (-edgeX, edgeX);
+		float randomY = Random.Range (-edgeY, edgeY);
+
+		_trans.localPosition = new Vector2 (randomX, randomY);
 	}
 }

@@ -27,3 +27,8 @@ public enum TypeShipShooter
 
 	All = 100,
 }
+
+public enum TypeAIMove
+{
+	Free = 0,
+}
