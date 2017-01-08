@@ -27,6 +27,11 @@ public class AIMeteorMoveController : MonoBehaviour
 
 		_trans = transform;
 		GetNewPosToMove ();
+
+		#region remove after test in garage
+		SetDirection ();
+		MoveToward ();
+		#endregion
 	}
 
 	void Update ()
@@ -36,7 +41,7 @@ public class AIMeteorMoveController : MonoBehaviour
 		dif = posMoveTo - (Vector2)_trans.position;
 		if (dif.magnitude <= sizeDeltaMove)
 			GetNewPosToMove ();
-
+		
 		Rotate ();
 	}
 
@@ -47,13 +52,12 @@ public class AIMeteorMoveController : MonoBehaviour
 
 	private void SetDirection ()
 	{
-		float angle = _trans.rotation.eulerAngles.z;
-		direction = new Vector2 (Mathf.Cos (angle * Mathf.Deg2Rad), Mathf.Sin (angle * Mathf.Deg2Rad));
+		direction = posMoveTo - (Vector2)_trans.position;
+		direction.Normalize ();
 	}
 
 	private void MoveToward ()
 	{
-		SetDirection ();
 		rigid.velocity = direction * speedMove;
 	}
 
@@ -63,6 +67,14 @@ public class AIMeteorMoveController : MonoBehaviour
 			return;
 
 		posMoveTo = GenerateForFree.generateMap.GetRandomSpace ();
+		SetDirection ();
+		MoveToward ();
+	}
+
+	private void FreeGo ()
+	{
+		posMoveTo = new Vector2 (Random.Range (-100f, 100f), Random.Range (-100f, 100f));
+
 		SetDirection ();
 		MoveToward ();
 	}

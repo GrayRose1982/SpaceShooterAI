@@ -21,9 +21,12 @@ public class GenerateForFree : MonoBehaviour
 	void Start ()
 	{
 		generateMap = this;
-		topEdgeSize = topEdge.position.y;
-		leftEdgeSize = leftEdge.position.x;
+//		topEdgeSize = topEdge.position.y;
+//		leftEdgeSize = leftEdge.position.x;
+	}
 
+	public void StartSpawn ()
+	{
 		StartCoroutine (SpawnCreepWhenStart ());
 
 		StartCoroutine (SpawnMeteor (200));
@@ -33,6 +36,17 @@ public class GenerateForFree : MonoBehaviour
 	{
 		if (Input.GetKey (KeyCode.Space))
 			KillAllEnemy ();
+
+		if (!topEdge && !leftEdge) {
+			if (!GameObject.FindGameObjectWithTag ("TopEdge"))
+				return;
+			
+			topEdge = GameObject.FindGameObjectWithTag ("TopEdge").transform;
+			leftEdge = GameObject.FindGameObjectWithTag ("LeftEdge").transform;
+
+			topEdgeSize = topEdge.position.y;
+			leftEdgeSize = leftEdge.position.x;
+		}
 
 	}
 

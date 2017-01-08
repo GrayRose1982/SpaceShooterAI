@@ -3,14 +3,14 @@ using System.Collections;
 
 public class UIGameController : MonoBehaviour
 {
-	public static UIGameController gameController;
+	public static UIGameController uiGameController;
 
 	public GameObject gameOverPanel;
 	public GameObject pausePanel;
 
 	void Start ()
 	{
-		gameController = this;
+		uiGameController = this;
 	}
 
 	public void GameOver ()

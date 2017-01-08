@@ -73,17 +73,18 @@ public class AIMoveController : MonoBehaviour
 				difAngle += 360;
 			else
 				difAngle -= 360;
-		
+
 		float speedRot;
 
-		if (difAngle == -180 || difAngle == 180) {
+		if (difAngle == 180 || difAngle == -180)
 			speedRot = speedRotate * Time.deltaTime;
-		} else {
+		else
 			speedRot = speedRotate * Time.deltaTime * (difAngle > 0 ? -1 : 1);
-		}
+		
 
-		speedRot = Mathf.Abs (speedRot) > Mathf.Abs (difAngle) ? difAngle : speedRot;
-
+		if (difAngle != 0)
+			speedRot = Mathf.Abs (speedRot) > Mathf.Abs (difAngle) ? difAngle : speedRot;
+		
 		_trans.Rotate (0, 0, speedRot);
 	}
 
@@ -109,6 +110,7 @@ public class AIMoveController : MonoBehaviour
 			s = -(180 + s);
 		else
 			s = 180 - s;
+		
 		s += 180;
 		engineParticle.startRotation = Mathf.Deg2Rad * (s);
 	}

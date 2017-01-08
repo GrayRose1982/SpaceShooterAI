@@ -22,6 +22,8 @@ public class Character : MonoBehaviour
 
 	void OnEnable ()
 	{
+		GameController.gc.GetComponent<GenerateForFree> ().StartSpawn ();
+
 		polygon = gameObject.AddComponent <PolygonCollider2D> ();
 		polygon.isTrigger = true;
 		ui.energy.MaxNum = _character.hp;
@@ -59,7 +61,7 @@ public class Character : MonoBehaviour
 		GetComponentInParent<MoveController> ().enabled = false;
 		Time.timeScale = 0f;
 
-		UIGameController.gameController.GameOver ();
+		UIGameController.uiGameController.GameOver ();
 	}
 
 	void OnTriggerEnter2D (Collider2D hit)
