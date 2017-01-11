@@ -22,12 +22,12 @@ public class Character : MonoBehaviour
 
 	void OnEnable ()
 	{
-		GameController.gc.GetComponent<GenerateForFree> ().StartSpawn ();
+		if (GameController.gc)
+			GameController.gc.GetComponent<GenerateForFree> ().StartSpawn ();
 
 		polygon = gameObject.AddComponent <PolygonCollider2D> ();
 		polygon.isTrigger = true;
 		ui.energy.MaxNum = _character.hp;
-		ui.shield.MaxNum = _character.armor;
 	}
 
 	void OnDisable ()
@@ -108,7 +108,6 @@ public class Character : MonoBehaviour
 	private void UpdateUI ()
 	{
 		ui.energy.current = _character.hp;
-		ui.shield.current = _character.armor;
 	}
 
 	private void GetItem (ItemDropped itemDropped)
@@ -142,7 +141,5 @@ public class Character : MonoBehaviour
 		polygon.isTrigger = true;
 
 		ui.energy.MaxNum = _character.hp;
-		ui.shield.MaxNum = _character.armor;
 	}
-
 }

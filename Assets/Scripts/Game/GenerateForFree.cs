@@ -14,22 +14,26 @@ public class GenerateForFree : MonoBehaviour
 	public int numberShipMax = 20;
 
 	private int numberShip = 0;
-	private float topEdgeSize;
-	private float leftEdgeSize;
+	public float topEdgeSize;
+	public float leftEdgeSize;
 
 
 	void Start ()
 	{
 		generateMap = this;
-//		topEdgeSize = topEdge.position.y;
-//		leftEdgeSize = leftEdge.position.x;
+		if (topEdge && leftEdge) {
+			topEdgeSize = topEdge.position.y;
+			leftEdgeSize = leftEdge.position.x;
+		}
+
+		StartSpawn (); 
 	}
 
 	public void StartSpawn ()
 	{
 		StartCoroutine (SpawnCreepWhenStart ());
 
-		StartCoroutine (SpawnMeteor (200));
+//		StartCoroutine (SpawnMeteor (200));
 	}
 
 	void Update ()
@@ -54,7 +58,8 @@ public class GenerateForFree : MonoBehaviour
 	{
 		while (!CharacterPooling.pool)
 			yield return new WaitForSeconds (.5f);
-		
+
+
 		for (int i = numberShip; i < numberShipMax; i++) {
 			if (CharacterPooling.pool.loadDone)
 				SpawnACreep ();

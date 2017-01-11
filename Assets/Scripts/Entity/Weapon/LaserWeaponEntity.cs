@@ -21,6 +21,7 @@ public class LaserWeaponEntity : WeaponEntity
 		timePerShoot = laserWeapon.timePerShoot;
 		bulletID = laserWeapon.bulletID;
 		number = laserWeapon.number;
+		barrels = laserWeapon.barrels;
 		laser = new LaserEntity (laserWeapon.laser, laserWeapon.damage, laserWeapon.armorBreak);
 	}
 }

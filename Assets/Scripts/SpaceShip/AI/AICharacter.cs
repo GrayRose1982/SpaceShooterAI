@@ -33,18 +33,21 @@ public class AICharacter : MonoBehaviour
 
 	public void TakeDamage (int damage, int armorBreak)
 	{
-		Debug.Log ("TakeDamage " + damage + " " + armorBreak);
-		_character.armor -= armorBreak;
-		if (_character.armor < 0) {
-			_character.hp -= damage;
-			_character.armor = 0;
-		} else {
-			_character.armor -= Mathf.RoundToInt (damage / 2);
-			if (_character.armor < 0) {
-				_character.hp += _character.armor * 2;
-				_character.armor = 0;
-			}
-		}
+		//Deu co them armor break
+//		Debug.Log ("TakeDamage " + damage + " " + armorBreak);
+//		_character.armor -= armorBreak;
+//		if (_character.armor < 0) {
+//			_character.hp -= damage;
+//			_character.armor = 0;
+//		} else {
+//			_character.armor -= Mathf.RoundToInt (damage / 2);
+//			if (_character.armor < 0) {
+//				_character.hp += _character.armor * 2;
+//				_character.armor = 0;
+//			}
+//		}
+
+		_character.hp -= damage;
 
 		if (_character.hp <= 0)
 			DestroyPlayer ();
@@ -52,9 +55,10 @@ public class AICharacter : MonoBehaviour
 
 	public void DestroyPlayer ()
 	{
-		GameController.gc.AddCoin (_character.coin);
+		if (GameController.gc)
+			GameController.gc.AddCoin (_character.coin);
 
-		ItemDroppedPooling.pool.GetDropBox (transform.position);
+//		ItemDroppedPooling.pool.GetDropBox (transform.position);
 		CharacterPooling.pool.ReturnShip (GetComponentInParent<AIMoveController> ());
 
 		Debug.LogWarning ("Kill " + transform.name + " or" + character.name);

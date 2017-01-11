@@ -16,29 +16,12 @@ public class LaserSlot : MonoBehaviour
 
 	public Image mainImg;
 	public Text nameTxt;
-	public Text energyDamageTxt;
-	public Text shieldDamageTxt;
+	public Text DamageTxt;
 	public Text timePerShootTxt;
 	public Text speedTxt;
-	public Text angleRotateTxt;
 
-	public Transform edFill;
-	public Transform sdFill;
-	public Transform tpfFill;
-	public Transform speedFill;
-
-	private void Fill (float max, float current, Transform fill)
-	{
-		float fillx = current / max;
-		fill.localScale = new Vector3 (fillx, 1f, 1f);
-	}
-
-	private void FillInverse (float max, float current, Transform fill)
-	{
-		float fillx = current / max;
-		fillx = 1 / fillx;
-		fill.localScale = new Vector3 (fillx, 1f, 1f);
-	}
+	public Slider damageFill;
+	public Slider speedFill;
 
 	private void ChangeDescription ()
 	{
@@ -46,9 +29,10 @@ public class LaserSlot : MonoBehaviour
 		mainImg.SetNativeSize ();
 		nameTxt.text = _weapon.laser.name;
 
-		Fill (ConstNumber.LaserEnergyDamageMax, _weapon.damage, edFill);
-		Fill (ConstNumber.LaserShieldDamageMax, _weapon.armorBreak, sdFill);
-		Fill (ConstNumber.LaserSpeedMax, _weapon.laser.speed, speedFill);
-		Fill (ConstNumber.LaserTimePerShootMax, _weapon.timePerShoot, tpfFill);
+		timePerShootTxt.text = _weapon.timePerShoot.ToString ();
+		DamageTxt.text = _weapon.damage.ToString ();
+		speedTxt.text = _weapon.laser.speed.ToString ();
+		damageFill.value = (float)_weapon.damage / ConstNumber.LaserEnergyDamageMax;
+		speedFill.value = (float)_weapon.laser.speed / ConstNumber.LaserSpeedMax;
 	}
 }

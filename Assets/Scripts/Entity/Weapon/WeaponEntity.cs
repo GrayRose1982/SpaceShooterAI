@@ -9,6 +9,7 @@ public class WeaponEntity
 	public int armorBreak = 10;
 
 	public float timePerShoot = 1f;
+	public GameObject barrels;
 
 	public string bulletID;
 

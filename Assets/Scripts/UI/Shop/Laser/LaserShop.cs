@@ -6,9 +6,9 @@ using UnityEngine.UI;
 public class LaserShop : MonoBehaviour
 {
 	public GameObject shopSlot;
-	public List<MissileWeaponEntity> MissileInShop;
+	public List<LaserWeaponEntity> laserWeaponInShop;
 
-	public List<MissileSlot> slotInShop;
+	public List<LaserSlot> slotInShop;
 
 	public LaserSlot current;
 
@@ -23,30 +23,31 @@ public class LaserShop : MonoBehaviour
 
 	private IEnumerator GetWeapon ()
 	{
-		MissileInShop = new List<MissileWeaponEntity> ();
 		while (!LoadWeaponXml.data) {
 			yield return new WaitForSeconds (.1f);
 		}
-		while (!LoadWeaponXml.data.loadMissileDone) {
+		while (!LoadWeaponXml.data.loadLaserDone) {
 			yield return new WaitForSeconds (.1f);
 		}
 
-		MissileInShop = new List<MissileWeaponEntity> (LoadWeaponXml.data.mwData);
+		laserWeaponInShop = new List<LaserWeaponEntity> (LoadWeaponXml.data.lwData);
 
 		for (int i = 0; i < slotInShop.Count; i++) {
-			if (MissileInShop.Count <= i)
+			if (laserWeaponInShop.Count <= i)
 				slotInShop [i].gameObject.SetActive (false);
 			else {
 				if (slotInShop.Count <= i) {
-					
+					LaserSlot s = ((GameObject)Instantiate (shopSlot, transform)).GetComponent<LaserSlot> ();
+
+					slotInShop.Add (s);
 				}
 				slotInShop [i].gameObject.SetActive (true);
-				slotInShop [i].weapon = new MissileWeaponEntity (MissileInShop [i]);
+				slotInShop [i].weapon = new LaserWeaponEntity (laserWeaponInShop [i]);
 			}
 		}
 
 		GetCurrent ();
-		SetSizeScroll (MissileInShop.Count);
+		SetSizeScroll (laserWeaponInShop.Count);
 	}
 
 	private void GetCurrent ()

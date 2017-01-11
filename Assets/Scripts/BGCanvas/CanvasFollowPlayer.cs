@@ -19,6 +19,16 @@ public class CanvasFollowPlayer : MonoBehaviour
 
 	void Update ()
 	{
-		_trans.position = offset + player.position;
+		Vector3 moveTo = offset + player.position;
+
+		if (GenerateForFree.generateMap) {
+			float maxX = GenerateForFree.generateMap.topEdgeSize;
+			float maxY = GenerateForFree.generateMap.leftEdgeSize;
+
+			moveTo.x = Mathf.Clamp (moveTo.x, -maxX, maxX);
+			moveTo.y = Mathf.Clamp (moveTo.y, maxY, -maxY);
+		}
+
+		_trans.position = moveTo;
 	}
 }

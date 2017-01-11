@@ -24,10 +24,10 @@ public class MainWeaponPanel : MonoBehaviour,IPointerDownHandler,IPointerEnterHa
 
 	private void CheckDoubleClick ()
 	{
-		if (Time.time - lastTimeClick < doubleClickTime) {
-			isDoubleClick = true;
-		}
-		lastTimeClick = Time.time;
+//		if (Time.time - lastTimeClick < doubleClickTime) {
+//			isDoubleClick = true;
+//		}
+//		lastTimeClick = Time.time;
 	}
 
 	public void OnPointerExit (PointerEventData eventData)

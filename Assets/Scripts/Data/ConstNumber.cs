@@ -3,9 +3,9 @@ using System.Collections;
 
 public class ConstNumber
 {
-	public const float LaserEnergyDamageMax = 50f;
-	public const float LaserShieldDamageMax = 50f;
-	public const float LaserTimePerShootMax = 50f;
+	public const float LaserEnergyDamageMax = 100f;
+	public const float LaserShieldDamageMax = 100f;
+	public const float LaserTimePerShootMax = .01f;
 	public const float LaserSpeedMax = 30f;
 	public const float MissileEnergyDamageMax = 500f;
 	public const float MissileShieldDamageMax = 500f;

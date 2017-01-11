@@ -9,6 +9,9 @@ public class LoadWeaponXml : MonoBehaviour
 
 	public List<LaserWeaponEntity> lwData;
 	public List<MissileWeaponEntity> mwData;
+
+	public GameObject[] gunBarrels;
+
 	private bool isLoadWeaponLaserDone;
 	private bool isLoadWeaponMissileDone;
 
@@ -69,7 +72,14 @@ public class LoadWeaponXml : MonoBehaviour
 		item.damage = int.Parse (info.SelectSingleNode ("Damage").InnerText);
 		item.armorBreak = int.Parse (info.SelectSingleNode ("ArmorBreak").InnerText);
 		item.timePerShoot = float.Parse (info.SelectSingleNode ("TimePerShoot").InnerText);
+		string gunBarrel = info.SelectSingleNode ("GunBarrels").InnerText;
 
+		foreach (GameObject gun in gunBarrels)
+			if (gun.name.CompareTo (gunBarrel) == 0) {
+				item.barrels = gun;
+				break;
+			}
+		
 		return item;
 	}
 

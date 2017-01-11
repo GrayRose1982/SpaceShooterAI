@@ -29,9 +29,4 @@ public class SetUpForNetwork : NetworkBehaviour
 
 		weaponController.ControlFire ();
 	}
-
-	//	[Command]
-	//	void CmdControlFire ()
-	//	{
-	//	}
 }

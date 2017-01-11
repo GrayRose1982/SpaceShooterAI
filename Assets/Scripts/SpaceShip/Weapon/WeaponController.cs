@@ -26,9 +26,16 @@ public class WeaponController : MonoBehaviour
 			return _mainWeapon;
 		}
 		set {
+			DestroyObject (_mainWeapon.barrels);
 			_mainWeapon = value;
 			_mainWeapon.laser.damage = _mainWeapon.damage;
 			_mainWeapon.laser.armorBreak = _mainWeapon.armorBreak;
+
+			_mainWeapon.barrels = (GameObject)Instantiate (_mainWeapon.barrels, transform);
+			ChangeGunBarrelMainWeapon (_mainWeapon.barrels.transform);
+
+			_mainWeapon.barrels.transform.localPosition = Vector3.zero;
+			_mainWeapon.barrels.transform.localRotation = Quaternion.identity;
 
 			SetUINewItem (ui.laserShow, _mainWeapon.laser.sprite, _mainWeapon.number);
 		}
@@ -49,6 +56,7 @@ public class WeaponController : MonoBehaviour
 
 	void OnEnable ()
 	{
+
 		targets = new List<Transform> ();
 		timerMainWeapon = Time.time;
 		timerSecondWeapon = Time.time;
@@ -57,6 +65,9 @@ public class WeaponController : MonoBehaviour
 		_mainWeapon.laser.armorBreak = _mainWeapon.armorBreak;
 		_secondWeapon.missile.damage = _secondWeapon.damage;
 		_secondWeapon.missile.armorBreak = _secondWeapon.armorBreak;
+
+		if (!ui)
+			return;
 
 		SetUINewItem (ui.laserShow, _mainWeapon.laser.sprite, _mainWeapon.number);
 		SetUINewItem (ui.missileShow, _secondWeapon.missile.sprite, _secondWeapon.number);
@@ -72,8 +83,8 @@ public class WeaponController : MonoBehaviour
 	{
 		if (fireMainWeapon)
 			FireMainWeapon ();
-		if (fireMissileWeapon)
-			FireMissileWeapon ();
+//		if (fireMissileWeapon)
+//			FireMissileWeapon ();
 	}
 
 	public void NextTarget ()
@@ -84,6 +95,24 @@ public class WeaponController : MonoBehaviour
 		Transform first = targets [0];
 		targets.RemoveAt (0);
 		targets.Add (first);
+	}
+
+	private void ChangeGunBarrelMainWeapon (Transform parentGunBarrels)
+	{
+		mainBarrels = new Transform[parentGunBarrels.childCount];
+
+		for (int i = 0; i < mainBarrels.Length; i++) {
+			mainBarrels [i] = parentGunBarrels.GetChild (i);
+		}
+	}
+
+	private void ChangeGunBarrelSecondWeapon (Transform parentGunBarrels)
+	{
+		secondBarrels = new Transform[parentGunBarrels.childCount];
+
+		for (int i = 0; i < mainBarrels.Length; i++) {
+			secondBarrels [i] = parentGunBarrels.GetChild (i);
+		}
 	}
 
 	private void SetCrossHair ()
@@ -109,7 +138,8 @@ public class WeaponController : MonoBehaviour
 				l.gameObject.layer = LayerMask.NameToLayer ("Player");
 				l.gameObject.SetActive (true);
 
-				SetUIFire (ui.laserShow, _mainWeapon.number--);
+				if (ui)
+					SetUIFire (ui.laserShow, _mainWeapon.number--);
 
 				if (_mainWeapon.number <= 0) {
 					_mainWeapon = LoadWeaponXml.data.lwData [0];
@@ -137,7 +167,9 @@ public class WeaponController : MonoBehaviour
 				m.gameObject.layer = LayerMask.NameToLayer ("Player");
 				m.SetTarget (targets.Count > 0 ? targets [0] : null);
 				m.gameObject.SetActive (true);
-				SetUIFire (ui.missileShow, _secondWeapon.number--);
+
+				if (ui)
+					SetUIFire (ui.missileShow, _secondWeapon.number--);
 
 				if (_secondWeapon.number <= 0) {
 					_secondWeapon = LoadWeaponXml.data.mwData [0];

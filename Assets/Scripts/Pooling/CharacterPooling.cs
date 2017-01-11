@@ -57,6 +57,9 @@ public class CharacterPooling : MonoBehaviour
 
 	public void ReturnShip (AIMoveController s)
 	{
+		if (!s)
+			return;
+
 		s.transform.SetParent (transform);
 		s.gameObject.SetActive (false);
 		ships.Add (s);

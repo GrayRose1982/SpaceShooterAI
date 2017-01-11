@@ -28,10 +28,17 @@ public class AIWeaponController : MonoBehaviour
 			return _mainWeapon;
 		}
 		set {
+			DestroyObject (_mainWeapon.barrels);
 			_mainWeapon = value;
 
 			if (_mainWeapon.laser == null)
 				_mainWeapon.laser = new LaserEntity ();
+
+			_mainWeapon.barrels = (GameObject)Instantiate (_mainWeapon.barrels, transform);
+			ChangeGunBarrelMainWeapon (_mainWeapon.barrels.transform);
+			_mainWeapon.barrels.transform.localPosition = Vector3.zero;
+			_mainWeapon.barrels.transform.localRotation = Quaternion.identity;
+
 			_mainWeapon.laser.damage = _mainWeapon.damage;
 			_mainWeapon.laser.armorBreak = _mainWeapon.armorBreak;
 		}
@@ -156,6 +163,15 @@ public class AIWeaponController : MonoBehaviour
 		if (targets.Count == 0) {
 			fireMainWeapon = false;
 			fireMissileWeapon = false;
+		}
+	}
+
+	private void ChangeGunBarrelMainWeapon (Transform parentGunBarrels)
+	{
+		mainBarrels = new Transform[parentGunBarrels.childCount];
+
+		for (int i = 0; i < mainBarrels.Length; i++) {
+			mainBarrels [i] = parentGunBarrels.GetChild (i);
 		}
 	}
 }
